@@ -1,49 +1,53 @@
 #include <stdio.h>
-#include <math.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <cstring>
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
 
-int convert(int decimalnum)
+char isNumber(char *text)
 {
-    int binarynum = 0;
-    int rem, temp = 1;
-
-    while (decimalnum!=0)
+    int j;
+    j = strlen(text);
+    while(j--)
     {
-        rem = decimalnum%2;
-        decimalnum = decimalnum / 2;
-        binarynum = binarynum + rem*temp;
-        temp = temp * 10;
-    }
-    return binarynum;
-}
+        if(isdigit(text[j]))
+            continue;
 
-unsigned numDigits(const unsigned n) {
-    if (n < 10) return 1;
-    return 1 + numDigits(n / 10);
+        return 0;
+    }
+    return 1;
 }
 
 int main (int argc, char* argv[]) {
 	if (argc < 2) return 1;
-	
+
 	if (!strcmp(argv[1], "save")) {
-
-		int fd = open(argv[2], O_RDWR | O_CREAT, 0600);
-
+		int fd = open(argv[2], O_RDWR | O_CREAT | O_TRUNC, 0666);
 		if (fd == -1) {
 			perror(argv[2]);
 			return 1;
 		}
 
-		int decimal;
-		scanf("%i", &decimal);
+		char decimal[32];
+		scanf("%s", decimal);
+		while(isNumber(decimal)) {
+			int decimal_int = atoi(decimal);
+			write(fd, &decimal_int, sizeof(decimal_int));
+			scanf("%s", decimal);
+		}
+		close(fd);
+	}
 
-		while(decimal != 0) { // 0 is end
-			char numstr[numDigits(convert(decimal))];
-		        sprintf(numstr, "%i", convert(decimal));
-			write(fd, numstr, strlen(numstr));
-			scanf("%i", &decimal); 
+	if (!strcmp(argv[1], "print")) {
+		int fd = open(argv[2], O_RDONLY);
+		if (fd == -1) {
+			perror(argv[2]);
+			return 1;
+		}
+		int num;
+		while(read(fd, &num, sizeof(num)) > 0) {
+			printf("%d\n", num);
 		}
 		close(fd);
 	}
