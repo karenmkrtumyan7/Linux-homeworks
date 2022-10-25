@@ -1,10 +1,11 @@
 #ifndef BIG
 #define BIG
-#include <iostream> 
+#include <string>
 class BigUnsigned {
 public:
-	std::string digits = "";
-	BigUnsigned(const string&s){};
-	friend BigUnsigned operator+(BigInt &, BigInt &);
-	friend BigUnsigned operator*(BigUnsigned &, BigUnsigned &);
-}
+	unsigned long long digits = 0;
+	BigUnsigned(const std::string s);
+	friend BigUnsigned operator+(BigUnsigned, BigUnsigned);
+	friend BigUnsigned operator*(BigUnsigned, BigUnsigned);
+};
+#endif

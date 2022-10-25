@@ -1,20 +1,17 @@
 #include <iostream>
 #include "big_integer.hpp"
+#include <string>
 
-BigUnsigned::BigUnsigned(string & s) {
-    digits = "";
-    int n = s.size();
-    for (int i = n - 1; i >= 0; i--) {
-        digits.push_back(s[i] - '0');
-    }
+BigUnsigned::BigUnsigned(const std::string s) {
+    this->digits = stoi(s);
 }
 
-BigUnsigned operator+(BigUnsigned &a, BigUnsigned &b){ 
-    // logic
-    return BigUnsigned;
+BigUnsigned operator+(BigUnsigned a, BigUnsigned b){ 
+   a.digits += b.digits;
+   return a;
 }
 
-BigUnsigned operator*(BigUnsigned&a, BigUnsigned&b){
-    // logic
-    return BigUnsigned;
+BigUnsigned operator*(BigUnsigned a, BigUnsigned b){
+    a.digits *= b.digits;
+    return a;
 }
