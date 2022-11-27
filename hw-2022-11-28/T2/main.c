@@ -25,6 +25,7 @@ int main(int argc, char* argv[]) {
 	if ((write_id = fork()) == 0) {
 		signal(SIGPIPE, sigpipe_handler);
 		char* text = "Hello world";
+		close(fd[0]);
 		while(write(fd[1], text, strlen(text))) {
 			bits += strlen(text);
 		}
@@ -33,6 +34,5 @@ int main(int argc, char* argv[]) {
 	char text[5];
 	read(fd[0], text, 5);
 	printf("%s\n", text);
-	kill(write_id, SIGPIPE);
 	exit(0);
 }
