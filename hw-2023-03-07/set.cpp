@@ -25,14 +25,19 @@ int main() {
 	
 	bool prime[300];
 
-	for (int p = 2; p * p <= 300; p++) {
+	for (int p = 2; p * p < 300; p++) {
 		if (!prime[p]) {
 			for (int i = p * p; i <= 300; i+=p) {
-				shared_array[p] = 1;
+				prime[i] = 1;
 			}
 		}
 	}
-	
+
+	for (int p = 2; p < 300; p++) {
+		if (!prime[p]) {
+			shared_array[p] = 1;
+		}
+	}
     	
 	if (shmdt(shared_array) < 0) {
 		std::cout << "ERROR: Cannot detach the sh m s!!\n";

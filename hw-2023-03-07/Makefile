@@ -13,7 +13,7 @@ check:
 set:
 	$(CPP) $(FLAGS) -o set set.cpp
 
-run: init destroy check set
+run:  init destroy check set
 	./init
 	./set
 	./check 3
