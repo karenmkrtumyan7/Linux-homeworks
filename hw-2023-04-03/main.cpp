@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <iostream>
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -31,7 +31,7 @@ int main() {
             semop(mutex, &semops[1], 1);
             
             buffer[i % BUFFER_SIZE] = item;
-            printf("Produced: %d\n", item);
+            std::cout << "Produced: " << item << '\n';
             item++;
             
             semctl(mutex, 0, SETVAL, 1);
@@ -46,7 +46,7 @@ int main() {
             semop(full, &semops[0], 1);
             semop(mutex, &semops[1], 1);
             
-            printf("Consumed: %d\n", buffer[i % BUFFER_SIZE]);
+            std::cout << "Consumed: " << buffer[i % BUFFER_SIZE] << '\n';
             
             semctl(mutex, 0, SETVAL, 1);
             semctl(empty, 0, SETVAL, 1);
