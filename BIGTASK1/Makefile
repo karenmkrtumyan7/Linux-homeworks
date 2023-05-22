@@ -4,7 +4,7 @@ run: main.cpp
 compile: run
 
 release: compile
-	./main 5
+	./main 4
 
 debug:
 	g++ main.cpp -o run -Wall -Werror -g -fsanitize=address,undefined
